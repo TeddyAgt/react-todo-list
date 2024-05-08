@@ -6,6 +6,7 @@ function TodoList({
   deleteTodo,
   toggleTodoDone,
   toggleTodoEditMode,
+  editTodo,
 }) {
   return todoList.length ? (
     <ul>
@@ -15,6 +16,7 @@ function TodoList({
             key={todo.id}
             todo={todo}
             toggleTodoEditMode={() => toggleTodoEditMode(todo.id)}
+            editTodo={(task) => editTodo(todo.id, task)}
           />
         ) : (
           <TodoItem

@@ -25,7 +25,7 @@ function AddTodo({ addTodo }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="-50 mb-4 flex flex-col items-center justify-center p-4"
+      className="mb-4 flex flex-col items-center justify-center bg-stone-50 p-4"
     >
       <div className="flex w-full">
         <input

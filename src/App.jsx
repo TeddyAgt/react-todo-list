@@ -36,6 +36,14 @@ function App() {
     );
   }
 
+  function editTodo(id, task) {
+    setTodoList(
+      todoList.map((todo) =>
+        todo.id === id ? { ...todo, task, editMode: false } : todo,
+      ),
+    );
+  }
+
   return (
     <section className="flex items-center justify-center p-4">
       <article className="container border bg-stone-50 p-4 shadow-sm">
@@ -48,6 +56,7 @@ function App() {
           deleteTodo={deleteTodo}
           toggleTodoDone={toggleTodoDone}
           toggleTodoEditMode={toggleTodoEditMode}
+          editTodo={editTodo}
         />
       </article>
     </section>
