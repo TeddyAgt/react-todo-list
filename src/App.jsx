@@ -11,6 +11,7 @@ function App() {
       task,
       done: false,
       editMode: false,
+      selected: false,
     };
 
     setTodoList([...todoList, todo]);
@@ -44,6 +45,16 @@ function App() {
     );
   }
 
+  function toggleSelectTodo(id) {
+    setTodoList(
+      todoList.map((todo) =>
+        todo.id === id
+          ? { ...todo, selected: !todo.selected }
+          : { ...todo, selected: false },
+      ),
+    );
+  }
+
   return (
     <section className="flex items-center justify-center p-4">
       <article className="container border bg-stone-50 p-4 shadow-sm">
@@ -57,6 +68,7 @@ function App() {
           toggleTodoDone={toggleTodoDone}
           toggleTodoEditMode={toggleTodoEditMode}
           editTodo={editTodo}
+          toggleSelectTodo={toggleSelectTodo}
         />
       </article>
     </section>
