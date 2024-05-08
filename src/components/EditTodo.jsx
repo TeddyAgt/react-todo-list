@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "./Button";
 
 function EditTodo({ todo, editTodo, toggleTodoEditMode }) {
   const [value, setValue] = useState(todo.task);
@@ -36,18 +37,10 @@ function EditTodo({ todo, editTodo, toggleTodoEditMode }) {
             value={value}
             placeholder="Ajouter une tâche"
           />
-          <button
-            type="submit"
-            className="mr-1 rounded bg-sky-500 p-1 text-sm text-white"
-          >
-            Sauvegarder
-          </button>
-          <button
-            onClick={toggleTodoEditMode}
-            className="rounded bg-red-500 p-1 text-sm text-white"
-          >
-            Annuler
-          </button>
+
+          <Button text="Sauvegarder" type="submit" className="mr-2" />
+
+          <Button text="Annuler" onClick={toggleTodoEditMode} />
         </div>
         {error && <p className="text-red-500">Le champs est vide</p>}
       </form>

@@ -1,9 +1,15 @@
 import { useState } from "react";
 import AddTodo from "./components/AddTodo";
 import TodoList from "./components/TodoList";
+import themeContext from "./context/theme";
 
 function App() {
+  const [theme, setTheme] = useState("sky");
   const [todoList, setTodoList] = useState([]);
+
+  function handleChangeTheme(e) {
+    setTheme(e.target.value);
+  }
 
   function addTodo(task) {
     const todo = {
@@ -56,22 +62,45 @@ function App() {
   }
 
   return (
-    <section className="flex items-center justify-center p-4">
-      <article className="container border bg-stone-50 p-4 shadow-sm">
-        <h1 className="mb-8 text-3xl font-bold">Todo List</h1>
+    <themeContext.Provider value={theme}>
+      <section className="flex items-center justify-center p-4">
+        <article className="container border bg-stone-50 p-4 shadow-sm">
+          <h1 className="mb-8 text-3xl font-bold">Todo List</h1>
 
-        <AddTodo addTodo={addTodo} />
+          <label htmlFor="theme">
+            Thème:{" "}
+            <select
+              onChange={handleChangeTheme}
+              name="theme"
+              id="theme"
+              value={theme}
+              className="rounded p-2"
+            >
+              <option className="bg-sky-500" value="sky">
+                Sky
+              </option>
+              <option className="bg-teal-500" value="teal">
+                Teal
+              </option>
+              <option className="bg-orange-500" value="orange">
+                Orange
+              </option>
+            </select>
+          </label>
 
-        <TodoList
-          todoList={todoList}
-          deleteTodo={deleteTodo}
-          toggleTodoDone={toggleTodoDone}
-          toggleTodoEditMode={toggleTodoEditMode}
-          editTodo={editTodo}
-          toggleSelectTodo={toggleSelectTodo}
-        />
-      </article>
-    </section>
+          <AddTodo addTodo={addTodo} />
+
+          <TodoList
+            todoList={todoList}
+            deleteTodo={deleteTodo}
+            toggleTodoDone={toggleTodoDone}
+            toggleTodoEditMode={toggleTodoEditMode}
+            editTodo={editTodo}
+            toggleSelectTodo={toggleSelectTodo}
+          />
+        </article>
+      </section>
+    </themeContext.Provider>
   );
 }
 

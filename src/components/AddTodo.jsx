@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "./Button";
 
 function AddTodo({ addTodo }) {
   const [value, setValue] = useState("");
@@ -35,9 +36,7 @@ function AddTodo({ addTodo }) {
           value={value}
           placeholder="Ajouter une tâche"
         />
-        <button className="rounded bg-sky-500 px-2 py-1 text-white hover:bg-sky-600">
-          Sauvegarder
-        </button>
+        <Button text={"Sauvegarder"} />
       </div>
       {error && <p className="text-red-500">Le champs est vide</p>}
     </form>

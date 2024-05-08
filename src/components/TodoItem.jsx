@@ -1,3 +1,5 @@
+import Button from "./Button";
+
 function TodoItem({
   todo,
   deleteTodo,
@@ -13,33 +15,32 @@ function TodoItem({
       <span className="mr-4 flex-auto">
         {todo.task} {todo.done && "( ✓ )"}
       </span>
-      <button
+
+      <Button
+        text="Valider"
+        className="mr-2"
         onClick={(e) => {
           e.stopPropagation();
           toggleTodoDone();
         }}
-        className="mr-1 rounded bg-sky-500 p-1 text-sm text-white"
-      >
-        Valider
-      </button>
-      <button
+      />
+
+      <Button
+        text="Modifier"
+        className="mr-2"
         onClick={(e) => {
           e.stopPropagation();
           toggleTodoEditMode();
         }}
-        className="mr-1 rounded bg-sky-500 p-1 text-sm text-white"
-      >
-        Modifier
-      </button>
-      <button
+      />
+
+      <Button
+        text="Supprimer"
         onClick={(e) => {
           e.stopPropagation();
           deleteTodo();
         }}
-        className="rounded bg-red-500 p-1 text-sm text-white"
-      >
-        Supprimer
-      </button>
+      />
     </li>
   );
 }
