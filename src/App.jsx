@@ -13,7 +13,7 @@ function App() {
   function handleChangeTheme(e) {
     dispatch({
       type: "SET_THEME",
-      name: e.target.value,
+      color: e.target.value,
     });
   }
 
