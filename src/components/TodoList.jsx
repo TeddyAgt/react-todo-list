@@ -1,33 +1,18 @@
 import TodoItem from "./TodoItem";
 import EditTodo from "./EditTodo";
+import { useContext } from "react";
+import { todoStateContext } from "../context/todoContext";
 
-function TodoList({
-  todoList,
-  deleteTodo,
-  toggleTodoDone,
-  toggleTodoEditMode,
-  editTodo,
-  toggleSelectTodo,
-}) {
-  return todoList.length ? (
+function TodoList() {
+  const state = useContext(todoStateContext);
+
+  return state.todoList.length ? (
     <ul>
-      {todoList.map((todo) =>
+      {state.todoList.map((todo) =>
         todo.editMode ? (
-          <EditTodo
-            key={todo.id}
-            todo={todo}
-            toggleTodoEditMode={() => toggleTodoEditMode(todo.id)}
-            editTodo={(task) => editTodo(todo.id, task)}
-          />
+          <EditTodo key={todo.id} todo={todo} />
         ) : (
-          <TodoItem
-            key={todo.id}
-            todo={todo}
-            deleteTodo={() => deleteTodo(todo.id)}
-            toggleTodoDone={() => toggleTodoDone(todo.id)}
-            toggleTodoEditMode={() => toggleTodoEditMode(todo.id)}
-            toggleSelectTodo={() => toggleSelectTodo(todo.id)}
-          />
+          <TodoItem key={todo.id} todo={todo} />
         ),
       )}
     </ul>

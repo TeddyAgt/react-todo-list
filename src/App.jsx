@@ -3,6 +3,7 @@ import AddTodo from "./components/AddTodo";
 import TodoList from "./components/TodoList";
 import themeContext from "./context/theme";
 import todoReducer from "./reducers/todoReducer";
+import { todoStateContext, todoDispatcherContext } from "./context/todoContext";
 
 function App() {
   const [state, dispatch] = useReducer(todoReducer, {
@@ -17,89 +18,43 @@ function App() {
     });
   }
 
-  function addTodo(task) {
-    dispatch({
-      type: "ADD_TODO",
-      task,
-    });
-  }
-
-  function deleteTodo(id) {
-    dispatch({
-      type: "DELETE_TODO",
-      id,
-    });
-  }
-
-  function toggleTodoDone(id) {
-    dispatch({
-      type: "TOGGLE_DONE",
-      id,
-    });
-  }
-
-  function toggleTodoEditMode(id) {
-    dispatch({
-      type: "TOGGLE_EDIT_MODE",
-      id,
-    });
-  }
-
-  function editTodo(id, task) {
-    dispatch({
-      type: "EDIT_TODO",
-      id,
-      task,
-    });
-  }
-
-  function toggleSelectTodo(id) {
-    dispatch({
-      type: "TOGGLE_SELECT",
-      id,
-    });
-  }
-
   return (
-    <themeContext.Provider value={state.theme}>
-      <section className="flex items-center justify-center p-4">
-        <article className="container border bg-stone-50 p-4 shadow-sm">
-          <h1 className="mb-8 text-3xl font-bold">Todo List</h1>
+    <todoStateContext.Provider value={state}>
+      <todoDispatcherContext.Provider value={dispatch}>
+        <themeContext.Provider value={state.theme}>
+          <section className="flex items-center justify-center p-4">
+            <article className="container border bg-stone-50 p-4 shadow-sm">
+              <h1 className="mb-8 text-3xl font-bold">Todo List</h1>
 
-          <label htmlFor="theme">
-            Thème:{" "}
-            <select
-              onChange={handleChangeTheme}
-              name="theme"
-              id="theme"
-              value={state.theme}
-              className="rounded p-2"
-            >
-              <option className="bg-sky-500" value="sky">
-                Sky
-              </option>
-              <option className="bg-teal-500" value="teal">
-                Teal
-              </option>
-              <option className="bg-orange-500" value="orange">
-                Orange
-              </option>
-            </select>
-          </label>
+              <label htmlFor="theme">
+                Thème:{" "}
+                <select
+                  onChange={handleChangeTheme}
+                  name="theme"
+                  id="theme"
+                  value={state.theme}
+                  className="rounded p-2"
+                >
+                  <option className="bg-sky-500" value="sky">
+                    Sky
+                  </option>
+                  <option className="bg-teal-500" value="teal">
+                    Teal
+                  </option>
+                  <option className="bg-orange-500" value="orange">
+                    Orange
+                  </option>
+                </select>
+              </label>
 
-          <AddTodo addTodo={addTodo} />
+              <AddTodo />
 
-          <TodoList
-            todoList={state.todoList}
-            deleteTodo={deleteTodo}
-            toggleTodoDone={toggleTodoDone}
-            toggleTodoEditMode={toggleTodoEditMode}
-            editTodo={editTodo}
-            toggleSelectTodo={toggleSelectTodo}
-          />
-        </article>
-      </section>
-    </themeContext.Provider>
+              <TodoList />
+            </article>
+          </section>
+        </themeContext.Provider>
+      </todoDispatcherContext.Provider>
+    </todoStateContext.Provider>
   );
 }
 

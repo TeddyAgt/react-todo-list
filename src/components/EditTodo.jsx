@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { todoDispatcherContext } from "../context/todoContext";
 import Button from "./Button";
 
-function EditTodo({ todo, editTodo, toggleTodoEditMode }) {
+function EditTodo({ todo }) {
   const [value, setValue] = useState(todo.task);
   const [error, setError] = useState(false);
+  const dispatch = useContext(todoDispatcherContext);
 
   function handleChange(e) {
     const inputValue = e.target.value;
@@ -19,7 +21,11 @@ function EditTodo({ todo, editTodo, toggleTodoEditMode }) {
       return;
     }
     setError(false);
-    editTodo(value);
+    dispatch({
+      type: "EDIT_TODO",
+      id: todo.id,
+      task: value,
+    });
     setValue("");
   }
 
@@ -40,7 +46,15 @@ function EditTodo({ todo, editTodo, toggleTodoEditMode }) {
 
           <Button text="Sauvegarder" type="submit" className="mr-2" />
 
-          <Button text="Annuler" onClick={toggleTodoEditMode} />
+          <Button
+            text="Annuler"
+            onClick={() => {
+              dispatch({
+                type: "TOGGLE_EDIT_MODE",
+                id: todo.id,
+              });
+            }}
+          />
         </div>
         {error && <p className="text-red-500">Le champs est vide</p>}
       </form>

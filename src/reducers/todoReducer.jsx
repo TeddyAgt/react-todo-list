@@ -64,7 +64,7 @@ function todoReducer(state, action) {
         ...state,
         todoList: state.todoList.map((todo) =>
           todo.id === action.id
-            ? { ...todo, selected: true }
+            ? { ...todo, selected: !todo.selected }
             : { ...todo, selected: false },
         ),
       };

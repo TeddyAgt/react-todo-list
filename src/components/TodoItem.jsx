@@ -1,15 +1,18 @@
+import { useContext } from "react";
+import { todoDispatcherContext } from "../context/todoContext";
 import Button from "./Button";
 
-function TodoItem({
-  todo,
-  deleteTodo,
-  toggleTodoDone,
-  toggleTodoEditMode,
-  toggleSelectTodo,
-}) {
+function TodoItem({ todo }) {
+  const dispatch = useContext(todoDispatcherContext);
+
   return (
     <li
-      onClick={toggleSelectTodo}
+      onClick={() => {
+        dispatch({
+          type: "TOGGLE_SELECT",
+          id: todo.id,
+        });
+      }}
       className={`mb-3 flex items-center justify-center rounded p-2 ${todo.selected ? "border-2 border-sky-200" : ""}`}
     >
       <span className="mr-4 flex-auto">
@@ -21,7 +24,10 @@ function TodoItem({
         className="mr-2"
         onClick={(e) => {
           e.stopPropagation();
-          toggleTodoDone();
+          dispatch({
+            type: "TOGGLE_DONE",
+            id: todo.id,
+          });
         }}
       />
 
@@ -30,7 +36,10 @@ function TodoItem({
         className="mr-2"
         onClick={(e) => {
           e.stopPropagation();
-          toggleTodoEditMode();
+          dispatch({
+            type: "TOGGLE_EDIT_MODE",
+            id: todo.id,
+          });
         }}
       />
 
@@ -38,7 +47,10 @@ function TodoItem({
         text="Supprimer"
         onClick={(e) => {
           e.stopPropagation();
-          deleteTodo();
+          dispatch({
+            type: "DELETE_TODO",
+            id: todo.id,
+          });
         }}
       />
     </li>
