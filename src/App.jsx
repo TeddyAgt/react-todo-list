@@ -1,68 +1,67 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import AddTodo from "./components/AddTodo";
 import TodoList from "./components/TodoList";
 import themeContext from "./context/theme";
+import todoReducer from "./reducers/todoReducer";
 
 function App() {
-  const [theme, setTheme] = useState("sky");
-  const [todoList, setTodoList] = useState([]);
+  const [state, dispatch] = useReducer(todoReducer, {
+    theme: "sky",
+    todoList: [],
+  });
 
   function handleChangeTheme(e) {
-    setTheme(e.target.value);
+    dispatch({
+      type: "SET_THEME",
+      name: e.target.value,
+    });
   }
 
   function addTodo(task) {
-    const todo = {
-      id: crypto.randomUUID(),
+    dispatch({
+      type: "ADD_TODO",
       task,
-      done: false,
-      editMode: false,
-      selected: false,
-    };
-
-    setTodoList([...todoList, todo]);
+    });
   }
 
   function deleteTodo(id) {
-    setTodoList(todoList.filter((todo) => todo.id !== id));
+    dispatch({
+      type: "DELETE_TODO",
+      id,
+    });
   }
 
   function toggleTodoDone(id) {
-    setTodoList(
-      todoList.map((todo) =>
-        todo.id === id ? { ...todo, done: !todo.done } : todo,
-      ),
-    );
+    dispatch({
+      type: "TOGGLE_DONE",
+      id,
+    });
   }
 
   function toggleTodoEditMode(id) {
-    setTodoList(
-      todoList.map((todo) =>
-        todo.id === id ? { ...todo, editMode: !todo.editMode } : todo,
-      ),
-    );
+    dispatch({
+      type: "TOGGLE_EDIT_MODE",
+      id,
+    });
   }
 
   function editTodo(id, task) {
-    setTodoList(
-      todoList.map((todo) =>
-        todo.id === id ? { ...todo, task, editMode: false } : todo,
-      ),
-    );
+    dispatch({
+      type: "EDIT_TODO",
+      id,
+      task,
+    });
   }
 
   function toggleSelectTodo(id) {
-    setTodoList(
-      todoList.map((todo) =>
-        todo.id === id
-          ? { ...todo, selected: !todo.selected }
-          : { ...todo, selected: false },
-      ),
-    );
+    dispatch({
+      type: "TOGGLE_SELECT",
+      id,
+    });
   }
 
   return (
-    <themeContext.Provider value={theme}>
+    <themeContext.Provider value={state.theme}>
       <section className="flex items-center justify-center p-4">
         <article className="container border bg-stone-50 p-4 shadow-sm">
           <h1 className="mb-8 text-3xl font-bold">Todo List</h1>
@@ -73,7 +72,7 @@ function App() {
               onChange={handleChangeTheme}
               name="theme"
               id="theme"
-              value={theme}
+              value={state.theme}
               className="rounded p-2"
             >
               <option className="bg-sky-500" value="sky">
@@ -91,7 +90,7 @@ function App() {
           <AddTodo addTodo={addTodo} />
 
           <TodoList
-            todoList={todoList}
+            todoList={state.todoList}
             deleteTodo={deleteTodo}
             toggleTodoDone={toggleTodoDone}
             toggleTodoEditMode={toggleTodoEditMode}
