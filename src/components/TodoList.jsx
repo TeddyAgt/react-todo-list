@@ -1,10 +1,9 @@
 import TodoItem from "./TodoItem";
 import EditTodo from "./EditTodo";
-import { useContext } from "react";
-import { todoStateContext } from "../context/todoContext";
+import { useTodo } from "../context/todoContext";
 
 function TodoList() {
-  const state = useContext(todoStateContext);
+  const state = useTodo();
 
   return state.todoList.length ? (
     <ul>
